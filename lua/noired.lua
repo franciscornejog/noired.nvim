@@ -1,135 +1,135 @@
-lua << EOF
-" Vim color file
-" Name:       noired.vim
-" Maintainer: Francisco Cornejo-Garcia (franciscornejog)
+-- noired.lua
+-- Author: Francisco Cornejo-Garcia (franciscornejog)
 
-" A minimalistic monochrome dark theme with red numerals and strings
-"
-" colors 232--250 are shades of gray, from dark to light;
-" 16=black, 255=white, 196=red, 88=darkred.
+local function load_highlight(statement)
+	for name, setting in pairs(statement) do
+		local fg = setting.fg and ' guifg=' .. setting.fg or ' guifg=NONE'
+		local bg = setting.bg and ' guibg=' .. setting.bg or ' guibg=NONE'
+		local gui = setting.gui and ' gui=' .. setting.gui or ' gui=NONE'
+		vim.cmd('highlight ' .. name .. gui .. fg .. bg)
+	end
+end
 
-highlight clear
-set background=dark
-if version > 580
-    " no guarantees for version 5.8 and below, but this makes it stop
-    " complaining
-    if exists("syntax_on")
-        syntax reset
-    endif
-endif
-let g:colors_name = "noired"
+local function link_highlight(statement)
+    for name, setting in pairs(statement) do
+        vim.cmd('highlight! link ' .. name .. ' ' .. setting)
+    end
+end
 
-if has("gui_running") || &t_Co == 256
-    hi Normal           cterm=NONE ctermfg=250 ctermbg=16  gui=NONE guifg=#bcbcbc guibg=#000000
-    hi Keyword          cterm=NONE ctermfg=255 ctermbg=16  gui=NONE guifg=#eeeeee guibg=#000000
-    hi Constant         cterm=NONE ctermfg=252 ctermbg=16  gui=NONE guifg=#d0d0d0 guibg=#000000
-    hi String           cterm=NONE ctermfg=196 ctermbg=16  gui=NONE guifg=#e04128 guibg=#000000
-    hi Comment          cterm=NONE ctermfg=240 ctermbg=16  gui=NONE guifg=#585858 guibg=#000000
-    hi Number           cterm=NONE ctermfg=196 ctermbg=16  gui=NONE guifg=#ff0000 guibg=#000000
-    hi Error            cterm=NONE ctermfg=255 ctermbg=196 gui=NONE guifg=#eeeeee guibg=#ff0000
-    hi ErrorMsg         cterm=NONE ctermfg=255 ctermbg=124 gui=NONE guifg=#eeeeee guibg=#af0000
-    hi Search           cterm=NONE ctermfg=245 ctermbg=236 gui=NONE guifg=#8a8a8a guibg=#303030
-    hi IncSearch        cterm=reverse ctermfg=255 ctermbg=245 gui=reverse guifg=#eeeeee guibg=#8a8a8a
-    hi DiffChange       cterm=NONE ctermfg=160 ctermbg=255 gui=NONE guifg=#ff0000 guibg=#eeeeee
-    hi DiffText         cterm=bold ctermfg=250 ctermbg=196 gui=bold guifg=#bcbcbc guibg=#ff0000
-    hi SignColumn       cterm=NONE ctermfg=196 ctermbg=16  gui=NONE guifg=#ff0000 guibg=#000000
-    hi SpellBad         cterm=undercurl ctermfg=255 ctermbg=88  gui=undercurl guifg=#eeeeee guibg=#870000
-    hi SpellCap         cterm=NONE ctermfg=255 ctermbg=196 gui=NONE guifg=#eeeeee guibg=#ff0000
-    hi SpellRare        cterm=NONE ctermfg=196 ctermbg=16  gui=NONE guifg=#ff0000 guibg=#000000
-    hi WildMenu         cterm=NONE ctermfg=240 ctermbg=255 gui=NONE guifg=#585858 guibg=#eeeeee
-    hi Pmenu            cterm=NONE ctermfg=255 ctermbg=240 gui=NONE guifg=#eeeeee guibg=#585858
-    hi PmenuThumb       cterm=NONE ctermfg=232 ctermbg=240 gui=NONE guifg=#000000 guibg=#585858
-    hi SpecialKey       cterm=NONE ctermfg=16  ctermbg=255 gui=NONE guifg=#000000 guibg=#eeeeee
-    hi MatchParen       cterm=NONE ctermfg=16  ctermbg=240 gui=NONE guifg=#000000 guibg=#585858
-    hi ColorColumn      cterm=NONE ctermfg=NONE ctermbg=233 gui=NONE guifg=NONE guibg=#121212
-    hi CursorColumn     cterm=NONE ctermfg=NONE ctermbg=233 gui=NONE guifg=NONE guibg=#121212
-    hi CursorLine       cterm=NONE ctermfg=NONE ctermbg=233 gui=NONE guifg=NONE guibg=#121212
-    hi StatusLine       cterm=bold ctermfg=245 ctermbg=16  gui=bold guifg=#8a8a8a guibg=#000000
-    hi StatusLineNC     cterm=NONE ctermfg=240 ctermbg=16  gui=NONE guifg=#585858 guibg=#000000
-    hi StatusLineTerm   cterm=bold ctermfg=245 ctermbg=16  gui=bold guifg=#8a8a8a guibg=#000000
-    hi StatusLineTermNC cterm=NONE ctermfg=240 ctermbg=16  gui=NONE guifg=#585858 guibg=#000000
-    hi Visual           cterm=reverse ctermfg=250 ctermbg=16  gui=reverse guifg=#bcbcbc guibg=#000000
-    hi TermCursor       cterm=reverse ctermfg=NONE ctermbg=NONE gui=reverse guifg=NONE guibg=NONE
-else
-    hi Normal cterm=NONE ctermfg=Gray ctermbg=Black
-    hi Keyword cterm=NONE ctermfg=White ctermbg=Black
-    hi Constant cterm=NONE ctermfg=Gray ctermbg=Black
-    hi String cterm=NONE ctermfg=Gray ctermbg=Black
-    hi Comment cterm=NONE ctermfg=DarkGray ctermbg=Black
-    hi Number cterm=NONE ctermfg=Red ctermbg=Black
-    hi Error cterm=NONE ctermfg=White ctermbg=DarkRed
-    hi ErrorMsg cterm=NONE ctermfg=White ctermbg=Red
-    hi Search cterm=NONE ctermfg=Gray ctermbg=DarkGray
-    hi IncSearch cterm=reverse ctermfg=White ctermbg=Gray
-    hi DiffChange cterm=NONE ctermfg=Red ctermbg=White
-    hi DiffText cterm=bold ctermfg=Gray ctermbg=Red
-    hi SignColumn cterm=NONE ctermfg=Red ctermbg=DarkGray
-    hi SpellBad cterm=undercurl ctermfg=White ctermbg=DarkRed
-    hi SpellCap cterm=NONE ctermfg=White ctermbg=Red
-    hi SpellRare cterm=NONE ctermfg=Red ctermbg=Black
-    hi WildMenu cterm=NONE ctermfg=DarkGray ctermbg=White
-    hi Pmenu cterm=NONE ctermfg=White ctermbg=DarkGray
-    hi PmenuThumb cterm=NONE ctermfg=Black ctermbg=DarkGray
-    hi SpecialKey cterm=NONE ctermfg=Black ctermbg=White
-    hi MatchParen cterm=NONE ctermfg=Black ctermbg=DarkGray
-    hi CursorLine cterm=NONE ctermfg=NONE ctermbg=Black
-    hi StatusLine cterm=bold,reverse ctermfg=Gray ctermbg=Black
-    hi StatusLineNC cterm=reverse ctermfg=DarkGray ctermbg=Black
-    hi Visual cterm=reverse ctermfg=Gray ctermbg=Black
-    hi TermCursor cterm=reverse ctermfg=NONE ctermbg=NONE
-endif
-highlight! link Boolean Normal
-highlight! link Delimiter Normal
-highlight! link Identifier Normal
-highlight! link Title Normal
-highlight! link Debug Normal
-highlight! link Exception Normal
-highlight! link FoldColumn Normal
-highlight! link Macro Normal
-highlight! link ModeMsg Normal
-highlight! link MoreMsg Normal
-highlight! link Question Normal
-highlight! link Conditional Keyword
-highlight! link Statement Keyword
-highlight! link Operator Keyword
-highlight! link Structure Keyword
-highlight! link Function Keyword
-highlight! link Include Keyword
-highlight! link Type Keyword
-highlight! link Typedef Keyword
-highlight! link Todo Keyword
-highlight! link Label Keyword
-highlight! link Define Keyword
-highlight! link DiffAdd Keyword
-highlight! link diffAdded Keyword
-highlight! link diffCommon Keyword
-highlight! link Directory Keyword
-highlight! link PreCondit Keyword
-highlight! link PreProc Keyword
-highlight! link Repeat Keyword
-highlight! link Special Keyword
-highlight! link SpecialChar Keyword
-highlight! link StorageClass Keyword
-highlight! link SpecialComment String
-highlight! link CursorLineNr String
-highlight! link Character Number
-highlight! link Float Number
-highlight! link Tag Number
-highlight! link Folded Number
-highlight! link WarningMsg Number
-highlight! link iCursor SpecialKey
-highlight! link SpellLocal SpellCap
-highlight! link LineNr Comment
-highlight! link NonText Comment
-highlight! link DiffDelete Comment
-highlight! link diffRemoved Comment
-highlight! link PmenuSbar Visual
-highlight! link PmenuSel Visual
-highlight! link VisualNOS Visual
-highlight! link VertSplit Visual
-highlight! link VertSplit StatusLineNC
-highlight! link Cursor StatusLine
-highlight! link Underlined SpellRare
-highlight! link rstEmphasis SpellRare
-highlight! link diffChanged DiffChange
-EOF
+local color = {
+	black = '#000000',
+	blackbg = '#121212',
+	darkgray = '#585858',
+	gray = '#BCBCBC',
+	white = '#EEEEEE',
+	red = '#E04128',
+	darkred = '#af0000',
+	lightgray = '#303030',
+	statusgray = '#8a8a8a',
+}
+
+local statements = {
+	Normal = { fg = color.gray, bg = color.black },
+	Keyword = { fg = color.white, bg = color.black },
+	Constant = { fg = color.gray, bg = color.black },
+	String = { fg = color.red, bg = color.black },
+	Comment = { gui = 'italic', fg = color.darkgray, bg = color.black },
+	Number = { fg = color.red, bg = color.black },
+	Error = { fg = color.white, bg = color.red },
+	ErrorMsg = { fg = color.white, bg = color.red },
+	Search = { fg = color.statusgray, bg = color.lightgray },
+	IncSearch = { gui = 'reverse', fg = color.white, bg = color.lightgray },
+	DiffChange = { fg = color.red, bg = color.white },
+	DiffText = { gui = 'bold', fg = color.gray, bg = color.red },
+	SignColumn = { fg = color.red, bg = color.black },
+	SpellBad = { gui = 'undercurl', fg = color.white, bg = color.red },
+	SpellCap = { fg = color.white, bg = color.red },
+	SpellRare = { fg = color.red, bg = color.black },
+	WildMenu = { fg = color.darkgray, bg = color.white },
+	Pmenu = { fg = color.white, bg = color.darkgray },
+	PmenuThumb = { fg = color.black, bg = color.darkgray },
+	SpecialKey = { fg = color.black, bg = color.white },
+	MatchParen = { fg = color.black, bg = color.darkgray },
+	ColorColumn = { bg = color.blackbg },
+	CursorColumn = { bg = color.blackbg },
+	CursorLine = { bg = color.blackbg },
+	StatusLine = { gui = 'bold', fg = color.statusgray, bg = color.black },
+	StatusLineNC = { fg = color.darkgray, bg = color.black },
+	StatusLineTerm = { gui = 'bold', fg = color.statusgray, bg = color.black },
+	StatusLineTermNC = { fg = color.darkgray, bg = color.black },
+	Visual = { gui = 'reverse', fg = color.gray, bg = color.black },
+	TermCursor = { gui = 'reverse'},
+}
+
+local link_statements = {
+	Boolean = 'Normal',
+	Delimiter = 'Normal',
+	Identifier = 'Normal',
+	Title = 'Normal',
+	Debug = 'Normal',
+	Exception = 'Normal',
+	FoldColumn = 'Normal',
+	Macro = 'Normal',
+	ModeMsg = 'Normal',
+	MoreMsg = 'Normal',
+	Question = 'Normal',
+	Conditional = 'Keyword',
+	Statement = 'Keyword',
+	Operator = 'Keyword',
+	Structure = 'Keyword',
+	Function = 'Keyword',
+	Include = 'Keyword',
+	Type = 'Keyword',
+	Typedef = 'Keyword',
+	Todo = 'Keyword',
+	Label = 'Keyword',
+	Define = 'Keyword',
+	DiffAdd = 'Keyword',
+	diffAdded = 'Keyword',
+	diffCommon = 'Keyword',
+	Directory = 'Keyword',
+	PreCondit = 'Keyword',
+	PreProc = 'Keyword',
+	Repeat = 'Keyword',
+	Special = 'Keyword',
+	SpecialChar = 'Keyword',
+	StorageClass = 'Keyword',
+	SpecialComment = 'String',
+	CursorLineNr = 'String',
+	Character = 'Number',
+	Float = 'Number',
+	Tag = 'Number',
+	Folded = 'Number',
+	WarningMsg = 'Number',
+	iCursor = 'SpecialKey',
+	SpellLocal = 'SpellCap',
+	LineNr = 'Comment',
+	NonText = 'Comment',
+	DiffDelete = 'Comment',
+	diffRemoved = 'Comment',
+	PmenuSbar = 'Visual',
+	PmenuSel = 'Visual',
+	VisualNOS = 'Visual',
+	VertSplit = 'Visual',
+	VertSplit = 'StatusLineNC',
+	Cursor = 'StatusLine',
+	Underlined = 'SpellRare',
+	rstEmphasis = 'SpellRare',
+	diffChanged = 'DiffChange',
+}
+
+local noired = {}
+
+noired.setup = function()
+    vim.cmd 'highlight clear'
+    vim.o.background = 'dark'
+    vim.o.termguicolors = true
+    vim.g.colors_name = 'noired'
+    if vim.fn.exists("syntax_on") then
+        vim.cmd('syntax reset')
+    end
+    load_highlight(statements)
+    link_highlight(link_statements)
+end 
+
+return noired

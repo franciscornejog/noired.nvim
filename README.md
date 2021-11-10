@@ -1,7 +1,7 @@
 # noired.nvim
 
 ## About
-A minimal dark theme written in lua.
+A minimal monochromatic dark theme written in lua.
 
 ## Installation
 Install by:
