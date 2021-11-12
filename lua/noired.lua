@@ -13,28 +13,33 @@ end
 
 local color = {
 	black = '#000000',
-	blackbg = '#121212',
+	blackbg = '#323232',
 	darkgray = '#585858',
 	gray = '#BCBCBC',
-	white = '#EEEEEE',
-	red = '#E04128',
-	darkred = '#af0000',
 	lightgray = '#303030',
-	statusgray = '#8a8a8a',
+    darkred = '#B2260E',
+	red = '#E04128',
+    orange = '#DA7719',
+    green = '#18A873',
+    yellow = '#FFCE19',
+    blue = '#28C7E0',
+    magenta = '#FF0DF1',
+    cyan = '#1BFFFC',
+	white = '#EEEEEE',
 }
 
 local statements = {
-	Normal = { fg = color.gray, bg = color.black },
+	Normal = { fg = color.gray },
 
-	Constant = { fg = color.red },
-	String = { fg = color.red },
-	Character = { fg = color.red },
-	Number = { fg = color.red },
-	Boolean = { fg = color.red },
-	Float = { fg = color.red },
+	Constant = { fg = color.orange },
+    Boolean = { fg = color.orange },
+    String = { fg = color.orange },
+    Character = { fg = color.orange },
+    Number = { fg = color.orange },
+    Float = { fg = color.orange },
 
 	Identifier = { fg = color.white },
-	Function = { fg = color.darkgray },
+	Function = { fg = color.red },
 
 	Statement = { fg = color.darkgray },
 	Conditional = { fg = color.darkgray },
@@ -43,25 +48,24 @@ local statements = {
 	Operator = { fg = color.darkgray },
 	Keyword = { fg = color.darkgray },
 	Exception = { fg = color.darkgray },
-
 	PreProc = { fg = color.darkgray },
 	Include = { fg = color.darkgray },
 	Define = { fg = color.darkgray },
 	Macro = { fg = color.darkgray },
 	PreCondit = { fg = color.darkgray },
-
 	Type = { fg = color.darkgray },
 	StorageClass = { fg = color.darkgray },
 	Structure = { fg = color.darkgray },
 	Typedef = { fg = color.darkgray },
-
 	Special = { fg = color.darkgray },
+
 	SpecialChar = { fg = color.red },
 	Tag = { fg = color.red },
 	Delimiter = { fg = color.gray },
 	Comment = { fg = color.darkgray },
 	SpecialComment = { fg = color.white },
 	Debug = { fg = color.white },
+	MatchParen = { fg = color.red },
 
 	Underlined = { fg = color.red },
 	Error = { fg = color.red },
@@ -69,67 +73,59 @@ local statements = {
 	Todo = { fg = color.red },
 	NonText = { fg = color.darkgray },
 
-	Cursor = { fg = color.darkgray },
+	Cursor = { fg = color.gray },
 	LineNr = { fg = color.darkgray },
 	CursorLineNr = { fg = color.red },
 	CursorLine = { bg = color.blackbg },
 	CursorColumn = { bg = color.blackbg },
 	ColorColumn = { bg = color.blackbg },
 
+	Folded = { fg = color.red },
+    FoldColumn = { bg = color.blackbg },
+
 	Visual = { bg = color.blackbg },
     VisualNOS = { bg = color.blackbg },
-
-	DiffAdd = { fg = color.white },
-	DiffChange = { fg = color.red, bg = color.white },
-	DiffDelete = { fg = color.darkgray },
-	DiffText = { fg = color.gray, bg = color.red },
-	diffAdded = { fg = color.white, bg = color.black },
-	diffChanged = { fg = color.red, bg = color.white },
-	diffCommon = { fg = color.white, bg = color.black },
-	diffRemoved = { fg = color.darkgray, bg = color.black},
+    VertSplit = { bg = color.black },
 
 	Directory = { fg = color.white },
 
-	FoldColumn = { fg = color.gray, bg = color.black },
-	Folded = { fg = color.red, bg = color.black },
-
-	Search = { fg = color.statusgray, bg = color.lightgray },
+	Search = { fg = color.gray, bg = color.lightgray },
 	IncSearch = { fg = color.white, bg = color.red },
-
-	MatchParen = { fg = color.red },
 
 	ModeMsg = { fg = color.gray },
 	MoreMsg = { fg = color.gray },
-	WarningMsg = { fg = color.red, bg = color.black },
-
+	WarningMsg = { fg = color.red },
 	Pmenu = { fg = color.gray },
 	PmenuSel = { fg = color.red },
 	WildMenu = { fg = color.red },
+	Question = { fg = color.red },
 
-	Question = { fg = color.gray },
+	StatusLine = { fg = color.white },
+	StatusLineNC = { fg = color.darkgray },
 
-	SignColumn = { fg = color.red },
+	SpecialKey = { fg = color.blue },
+	SpellBad = { fg = color.blue },
+	SpellCap = { fg = color.blue },
+	SpellLocal = { fg = color.blue },
+	SpellRare = { fg = color.blue },
 
-	SpecialKey = { fg = color.black, bg = color.white },
+    helpHyperTextEntry = { fg = color.red },
 
-	SpellBad = { fg = color.white, bg = color.red },
-	SpellCap = { fg = color.white, bg = color.red },
-	SpellLocal = { fg = color. white, bg = color.red },
-	SpellRare = { fg = color.red, bg = color.black },
+    SignColumn = { bg = color.black },
+    DiffText = { bg = color.blackbg },
+ 	DiffAdd = { fg = color.green },
+ 	DiffChange = { fg = color.orange },
+ 	DiffDelete = { fg = color.red },
 
-	StatusLine = { fg = color.statusgray, bg = color.black },
-	StatusLineNC = { fg = color.darkgray, bg = color.black },
-	StatusLineTerm = { fg = color.statusgray, bg = color.black },
-	StatusLineTermNC = { fg = color.darkgray, bg = color.black },
-
-	Title = { fg = color.gray, bg = color.black },
-
-	VertSplit = { fg = color.gray },
+    -- fugitive
+    diffLine = { fg = color.darkgray },
+    diffAdded = { fg = color.green },
+    diffRemoved = { fg = color.red },
 }
 
-local noired = {}
+local M = {}
 
-noired.setup = function()
+M.setup = function()
     vim.cmd 'highlight clear'
     vim.o.background = 'dark'
     vim.o.termguicolors = true
@@ -141,4 +137,4 @@ noired.setup = function()
     set_namespace(namespace)
 end 
 
-return noired
+return M
