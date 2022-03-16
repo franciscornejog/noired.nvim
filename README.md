@@ -19,7 +19,7 @@ Plug 'franciscornejog/noired.nvim'
 ## Usage
 Enable colorscheme:
 ``` lua
-vim.cmd 'colorscheme noired'
+vim.cmd('colorscheme noired')
 ```
 ``` vim
 colorscheme noired
